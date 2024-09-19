@@ -1,0 +1,63 @@
+using System;
+
+namespace N1
+{
+    class Program
+    {
+        static int IntersectionTrees(int b, int c, int d) //кол-во деревьев, которые попадают в диапазон у обоих
+        {
+            int res = 0;
+
+            for (int i = c; i <= d; i++)
+            {
+                if (i <= b)
+                {
+                    res++;
+                }
+            }
+            return res;
+        }
+
+        static int FindTreesFromMetres(int metres)
+        {
+            int num_trees = 0;
+            if (metres != 0)
+            {
+                num_trees = 2 * metres + 1;
+            }
+            return num_trees;
+        }
+
+        static void Main(string[] args)
+        {
+            string[] array1 = Console.ReadLine().Split(' ');//Vasya
+            string[] array2 = Console.ReadLine().Split(' ');//Masha
+            int P = int.Parse(array1[0]);
+            int V = int.Parse(array1[1]);
+            int Q = int.Parse(array2[0]);
+            int M = int.Parse(array2[1]);
+
+            //кол-во покрашенных деревьев у каждого, если нет пересечений
+            int num1 = FindTreesFromMetres(V);
+            int num2 = FindTreesFromMetres(M);
+            //найдем границы интервалов
+            int P1 = P - V;
+            int P2 = P + V;
+            int Q1 = Q - M;
+            int Q2 = Q + M;
+
+            int num_intersection = 0;
+
+            if (P2 >= Q1 && Q1 >= P1)
+            {
+                num_intersection = IntersectionTrees(P2, Q1, Q2);
+            }
+            else if (Q2 >= P1 && P1 >= Q1)
+            {
+                num_intersection = IntersectionTrees(Q2, P1, P2);
+            }
+
+            Console.WriteLine(num1 + num2 - num_intersection);
+        }
+    }
+}
