@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+
+namespace Task3
+{
+    class Program
+    {
+        static ulong DirectionIterations(int a)
+        {
+            ulong num = 0;
+            int k = 0; //direction 1 - forward, -1 -back
+            int b = 0; //koef of closest number that %4 == 0
+            int b1 = a / 4; //left border koef
+            int b2 = b1 + 1; //right border koef
+
+            if (a % 4 == 0)
+            {
+                num = (ulong)(a / 4);
+            }
+            else
+            {
+                if ((a - 4 * b1) <= (4 * b2 - a))
+                {
+                    b = b1;
+                    k = 1;
+                }
+                else
+                {
+                    b = b2;
+                    k = -1;
+                }
+                num = (ulong)b;
+                for (int i = 4 * b; i != a; i += k)
+                {
+                    num++;
+                }
+            }
+            
+            return num;
+        }
+
+
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+            List<int> a_i = new List<int>();
+            ulong res = 0;
+            for (int i = 0; i < n; i++)
+            {
+                a_i.Add(int.Parse(Console.ReadLine()));
+
+                res += DirectionIterations(a_i[i]);
+            }
+            Console.WriteLine(res);
+        }
+    }
+}
