@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+
+
+namespace TaskF_new
+{
+    class Program
+    {
+        //Согласно свойству нечетных чисел: 
+        // нечетн. * нечетн = нечетн.
+        // четн. + нечетн. = нечетн.
+        static char PrintSymb(int[] arr_nums, int elmnt_indx, int step)
+        {
+            char plus = '+';
+            char multiply = 'x';
+
+            //соседнее число нечётное
+            if ((arr_nums[elmnt_indx + step] % 2) != 0)
+            {
+                return multiply;
+            }
+            else //соседнее число чётное
+            {
+                return plus;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            int nums_count = int.Parse(Console.ReadLine());
+            int[] nums = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+            List<char> symb = new List<char>();
+            int indx_odd = 0;
+            char pri_symb = ' ';
+
+            while ((nums[indx_odd] % 2) == 0)
+            {
+                indx_odd++;
+            }
+
+            for (int i = indx_odd; i < nums_count - 1; i++)
+            {
+                pri_symb = PrintSymb(nums, i, 1);
+                symb.Add(pri_symb);
+            }
+
+            for (int i = indx_odd; i > 0; i--)
+            {
+                pri_symb = PrintSymb(nums, i, -1);
+                symb.Insert(0, pri_symb);
+            }
+
+            Console.WriteLine(string.Join("", symb));
+        }
+    }    
+}
